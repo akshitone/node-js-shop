@@ -1,0 +1,8 @@
+{
+    "env": {
+        "MONGO_USER": "akshitone",
+        "MONGO_PASSWORD": "akshitone",
+        "MONGO_DEFAULT_DATABASE": "shop",
+        "STRIPE_KEY": "sk_test_51HXo7MEL67pgdskB9lO2497PBMjor1ZTx9awty04OCVb2ZMrcicfcA3CscKWska94NaedUqk58cZM1Dg62D9Ab2b00wQ8bfCm9"
+    }
+}

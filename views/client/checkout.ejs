@@ -1,0 +1,117 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs') %>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="d-flex flex-row">
+                <div class="flex-row-fluid">
+                    <% var totalPrice = 0; %>
+                    <% if (products.length > 0) { %>
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label font-weight-bolder font-size-h3 text-dark">My Shopping
+                                    Cart</span>
+                            </h3>
+                            <div class="card-toolbar">
+                                <div class="dropdown dropdown-inline">
+                                    <a href="/" class="btn btn-primary font-weight-bolder font-size-sm">Continue
+                                        Shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th class="text-center">Qty</th>
+                                            <th class="text-right">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% products.forEach(product => { %>
+                                        <% totalPrice = totalPrice + product.qty * product.productId.price; %>
+                                        <tr>
+                                            <td class="d-flex align-items-center font-weight-bolder">
+                                                <div class="symbol symbol-60 flex-shrink-0 mr-4 bg-light">
+                                                    <div class="symbol-label">
+                                                        <img src="/<%= product.productId.imageurl %>" width="50" />
+                                                    </div>
+                                                </div>
+                                                <!--end::Symbol-->
+                                                <a href="#" class="text-dark text-hover-primary">
+                                                    <%= product.productId.title %>
+                                                </a>
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <span class="mr-2 font-weight-bolder">
+                                                    <%= product.qty %>
+                                                </span>
+                                            </td>
+                                            <td class="text-right align-middle font-weight-bolder font-size-h5">
+                                                ₹ <%= product.productId.price %>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                        <tr>
+                                            <td colspan="1"></td>
+                                            <td class="font-weight-bolder font-size-h4 text-right">Subtotal</td>
+                                            <td class="font-weight-bolder font-size-h4 text-right">
+                                                ₹ <%= totalPrice %></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" class="border-0 text-muted text-right pt-0">Excludes
+                                                Delivery. GST Included</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="border-0 pt-10"> &nbsp; </td>
+                                            <td colspan="2" class="border-0 text-right pt-10">
+                                                <button id="order-btn" class="btn btn-success font-weight-bolder px-8">
+                                                    Order Now</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <% } else { %>
+                    <div class="alert alert-custom alert-notice alert-danger fade show mb-5" role="alert">
+                        <div class="alert-icon">
+                            <i class="flaticon-warning"></i>
+                        </div>
+                        <div class="alert-text">Your shopping cart is empty!</div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="ki ki-close"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Script -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe(
+        'pk_test_51HXo7MEL67pgdskB71TpOHCE0ow8AeJEla8kq1zCByXIxD3hn67ZjMV8E6lZnZLrPsibGFDJcPKekkIbY9UWLAq300o4lGIAn7'
+    );
+    var orderBtn = document.getElementById('order-btn');
+    orderBtn.addEventListener('click', function () {
+        stripe.redirectToCheckout({
+            sessionId: '<%= sessionId %>'
+        });
+    });
+</script>
+
+<%- include('../includes/end.ejs') %>

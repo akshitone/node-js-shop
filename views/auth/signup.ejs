@@ -1,0 +1,77 @@
+<%- include('../includes/head.ejs') %>
+
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled page-loading">
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5FS8GGP" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <div class="d-flex flex-column flex-root">
+        <div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid bg-white"
+            id="kt_login">
+
+            <div
+                class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 mx-auto">
+                <div class="d-flex flex-column-fluid flex-center">
+                    <div class="col-md-5">
+                        <div class="login-form login-signin">
+                            <form class="form" action="/signup" method="POST" novalidate="novalidate"
+                                id="kt_login_signin_form">
+                                <% if (errorMessage) { %>
+                                <div class="alert alert-custom alert-notice alert-danger fade show mb-5" role="alert">
+                                    <div class="alert-icon">
+                                        <i class="flaticon-warning"></i>
+                                    </div>
+                                    <div class="alert-text"><%= errorMessage %> </div>
+                                    <div class="alert-close">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                <i class="ki ki-close"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <% } %>
+                                <div class="pb-13 pt-lg-0 pt-5">
+                                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to
+                                        Mithaiwala</h3>
+                                    <span class="text-muted font-weight-bold font-size-h4">Let's set up your account.
+                                        Already have one?
+                                        <a href="/login" id="kt_login_signup"
+                                            class="text-primary font-weight-bolder">Log in here</a></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
+                                    <input
+                                        class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'bg-light-danger is-invalid' : '' %> form-control-solid h-auto py-6 px-6 rounded-lg"
+                                        type="email" name="email" autocomplete="off" value="<%= oldInput.email %>" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="d-flex justify-content-between mt-n5">
+                                        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+                                    </div>
+                                    <input
+                                        class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'bg-light-danger is-invalid' : '' %> form-control-solid h-auto py-6 px-6 rounded-lg"
+                                        type="password" name="password" autocomplete="off"
+                                        value="<%= oldInput.password %>" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="d-flex justify-content-between mt-n5">
+                                        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Confirm
+                                            Password</label>
+                                    </div>
+                                    <input
+                                        class="form-control <%= validationErrors.find(e => e.param === 'confirmPassword') ? 'bg-light-danger is-invalid' : '' %> form-control-solid h-auto py-6 px-6 rounded-lg"
+                                        type="password" name="confirmPassword" autocomplete="off"
+                                        value="<%= oldInput.confirmPassword %>" />
+                                </div>
+                                <div class="pb-lg-0 pb-5">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <button type="submit" id="kt_login_signin_submit"
+                                        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Sign
+                                        Up</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <%- include('../includes/end.ejs') %>

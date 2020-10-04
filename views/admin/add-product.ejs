@@ -1,0 +1,138 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs') %>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <% if (errorMessage) { %>
+                    <div class="alert alert-custom alert-notice alert-danger fade show mb-5" role="alert">
+                        <div class="alert-icon">
+                            <i class="flaticon-warning"></i>
+                        </div>
+                        <div class="alert-text"><%= errorMessage %> </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="ki ki-close"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% if (successMessage) { %>
+                    <div class="alert alert-custom alert-notice alert-success fade show mb-5" role="alert">
+                        <div class="alert-icon">
+                            <i class="flaticon-warning"></i>
+                        </div>
+                        <div class="alert-text"><%= successMessage %> </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">
+                                    <i class="ki ki-close"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <% } %>
+                    <div class="card card-custom">
+                        <div class="card-header">
+                            <h3 class="card-title text-primary"> <% if (editing) { %> Edit Product <% } else { %>
+                                Add
+                                Product <% } %> </h3>
+                            <div class="card-toolbar">
+                                <div class="example-tools justify-content-center">
+                                    <span class="example-toggle" data-toggle="tooltip" title="View code"></span>
+                                    <span class="example-copy" data-toggle="tooltip" title="Copy code"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>"
+                            class="form" method="POST" enctype="multipart/form-data">
+                            <div class="card-body">
+                                <input type="hidden" value="<% if (editing) { %><%= product._id%><% } %>"
+                                    name="productid" />
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <div class="form-group row">
+                                    <label for="product-name" class="col-sm-2 col-form-label">Product Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text"
+                                            class="form-control <%= validationErrors.find(e => e.param === 'title') ? 'is-invalid' : '' %>"
+                                            placeholder="Enter name" id="title" name="title"
+                                            value="<% if (editing || hasError) { %><%= product.title%><% } %>" />
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-last row">
+                                    <label for="product-name" class="col-sm-2 col-form-label">Image</label>
+                                    <% if (editing) { %>
+                                    <div class="col-sm-2">
+                                        <div class="image-input image-input-outline" id="kt_user_add_avatar">
+                                            <div class="image-input-wrapper">
+                                                <img src="/<%= product.imageurl %>" class="mw-100 w-200px" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                class="custom-file-input <%= validationErrors.find(e => e.param === 'imageurl') ? 'is-invalid' : '' %>"
+                                                id="imageurl" name="imageurl" />
+                                            <label class="custom-file-label" for="imageurl"><%= product.imageurl %>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <% } else if (hasError) { %>
+                                    <div class="col-sm-10">
+                                        <div class="custom-file">
+                                            <input type="file"
+                                                class="custom-file-input <%= validationErrors.find(e => e.param === 'imageurl') ? 'is-invalid' : '' %>"
+                                                id="imageurl" name="imageurl" />
+                                            <label class="custom-file-label" for="imageurl">Choose file
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <% } else { %>
+                                    <div class="col-sm-10">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="imageurl"
+                                                name="imageurl" />
+                                            <label class="custom-file-label" for="imageurl">Choose file
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="product-name" class="col-sm-2 col-form-label">Price</label>
+                                    <div class="col-sm-10">
+                                        <input type="number"
+                                            class="form-control <%= validationErrors.find(e => e.param === 'price') ? 'is-invalid' : '' %>"
+                                            step="0.01" placeholder="Enter price" id="price" name="price"
+                                            value="<% if (editing || hasError) { %><%= product.price%><% } %>" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="product-name" class="col-sm-2 col-form-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <textarea
+                                            class="form-control <%= validationErrors.find(e => e.param === 'description') ? 'is-invalid' : '' %>"
+                                            id="description" name="description" placeholder="Enter decription"
+                                            rows="5"><% if (editing || hasError) { %><%= product.description%><% } %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/end.ejs') %>

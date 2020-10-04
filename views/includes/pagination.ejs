@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center align-items-center flex-wrap">
+    <div class="d-flex flex-wrap py-2 mr-3">
+        <a href="?page=1" class="btn btn-icon btn-light-primary mr-2 my-1 <%= currentPage === 1 ? 'disabled' : '' %>"><i
+                class="ki ki-bold-double-arrow-back icon-xs"></i></a>
+        <a href="?page=<%= previousPage %>"
+            class="btn btn-icon btn-light-primary mr-2 my-1 <%= !hasPreviousPage ? 'disabled' : '' %>"><i
+                class="ki ki-bold-arrow-back icon-xs"></i></a>
+
+        <% if (currentPage !== 1 && previousPage !== 1) { %>
+        <a href="?page=1" class="btn btn-icon  border-0 btn-hover-primary btn-light mr-2 my-1">1</a>
+        <% } %>
+
+        <% if (hasPreviousPage) { %>
+        <a href="?page=<%= previousPage %>"
+            class="btn btn-icon  border-0 btn-hover-primary btn-light mr-2 my-1"><%= previousPage %></a>
+        <% } %>
+
+        <a href="?page=<%= currentPage %>"
+            class="btn btn-icon  border-0 btn-hover-primary btn-light btn-hover-primary active mr-2 my-1"><%= currentPage %></a>
+
+        <% if (hasNextPage) { %>
+        <a href="?page=<%= nextPage %>"
+            class="btn btn-icon  border-0 btn-hover-primary btn-light mr-2 my-1"><%= nextPage %></a>
+        <% } %>
+
+        <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
+        <a href="?page=<%= lastPage %>"
+            class="btn btn-icon  border-0 btn-hover-primary btn-light mr-2 my-1"><%= lastPage %></a>
+        <% } %>
+
+        <a href="?page=<%= nextPage %>"
+            class="btn btn-icon  btn-light-primary mr-2 my-1 <%= !hasNextPage ? 'disabled' : '' %>"><i
+                class="ki ki-bold-arrow-next icon-xs"></i></a>
+        <a href="?page=<%= lastPage %>"
+            class="btn btn-icon  btn-light-primary mr-2 my-1 <%= currentPage === lastPage ? 'disabled' : '' %>"><i
+                class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+    </div>
+</div>

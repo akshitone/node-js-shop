@@ -1,0 +1,54 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs') %>
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="d-flex row">
+                <div class="col-md-12">
+                    <div class="card card-custom gutter-b">
+                        <!--begin::Card Body-->
+                        <div
+                            class="card-body d-flex rounded bg-danger p-12 flex-column flex-md-row flex-lg-column flex-xxl-row">
+                            <!--begin::Image-->
+                            <div class="bgi-no-repeat bgi-position-center rounded bgi-size-cover h-300px h-md-auto">
+                                <img src="/<%= product.imageurl %>" class="mw-100 w-350px" />
+                            </div>
+                            <!--end::Image-->
+                            <!--begin::Card-->
+                            <div class="card card-custom w-auto w-md-400px w-lg-auto w-xxl-400px ml-auto">
+                                <!--begin::Card Body-->
+                                <div class="card-body px-12 py-10">
+                                    <h3 class="font-weight-bolder font-size-h2 mb-1">
+                                        <a href="#" class="text-dark-75"><%= product.title %></a>
+                                    </h3>
+                                    <div class="text-primary font-weight-bolder font-size-h4 mb-9">
+                                        ₹ <%= product.price %></div>
+                                    <div class="font-size-sm mb-8">
+                                        <%= product.description %>
+                                    </div>
+                                    <form action="/cart" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                                        <input type="hidden" name="productid" value="<%= product._id %>" />
+                                        <button type="submit" class="btn btn-primary btn-sm mr-3">
+                                            <i class="fas fa-cart-arrow-down"></i>Add to cart</button>
+                                    </form>
+                                    <!--begin::Info-->
+
+                                    <!--end::Info-->
+                                </div>
+                                <!--end::Card Body-->
+                            </div>
+                            <!--end::Card-->
+                        </div>
+                        <!--end::Card Body-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%- include('../includes/end.ejs') %>
